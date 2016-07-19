@@ -5,13 +5,13 @@ Focus on supporting proxy.
 ## Images
 
 All images have: 
-- proxy suport except when the name ends with "-np" (*n*o *p*roxy).
+- proxy support except when the name ends with "-np" (**n**o **p**roxy).
 - VirtualBox Guest Additions
 
 WORKING:
 - vb-fedora-24 VirtualBox (Oracle repo)  Fedora 24 
 - vbrpmfusion-fedora-24 VirtualBox (RPMFusion repo)  Fedora 24 
--
+
 
 OBSOLETE:
 - Ltib-0
@@ -27,7 +27,7 @@ I will try to add:
 - libvirt and some tinier images
 - Ansible support (instead of Salt)
 - make alternates to VirtualBox
--
+
 
 ## Install
 ### Pre-requisite
@@ -38,8 +38,8 @@ I will try to add:
  
 ### Build the VM
  
-Simply run `./make.sh *file.json*`. (It can take hours.)
-And then `./launch.sh *file.json*`
+Simply run `./make.sh filexxx.json`. (It can take hours.)
+And then `./launch.sh filexxx.json`
 
 ## More install info
  
