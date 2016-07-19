@@ -1,0 +1,51 @@
+{
+  "builders": [{
+    "type": "virtualbox-iso",
+    "guest_os_type": "Fedora_64",
+    "iso_url": "{{user `mirror`}}/releases/24/Server/x86_64/iso/Fedora-Server-netinst-x86_64-24-1.2.iso",
+    "iso_checksum": "071c30520775b3e93bb4c34edab4eab3badc26fbb8473ad3a9458614ba85a4e5",
+    "iso_checksum_type": "sha256",
+    "vm_name": "{{user `name`}}",
+    "name": "{{user `name`}}",
+    "disk_size": "{{user `disk_size`}}",
+    "headless": "{{user `headless`}}",
+    "http_directory": "kickstart",
+    "boot_wait": "5s",
+    "boot_command": [
+      "<tab> ",
+      "inst.ks=http://{{.HTTPIP}}:{{.HTTPPort}}/fedora-np.ks.cfg ",
+      "biosdevname=0 ",
+      "net.ifnames=0 ",
+      "<enter>"
+    ],
+    "ssh_timeout": "{{user `ssh_timeout`}}",
+    "ssh_username": "toto",
+    "ssh_password": "toto",
+    "shutdown_command": "sudo systemctl poweroff",
+    "vboxmanage": [
+      ["modifyvm", "{{.Name}}", "--memory", "{{user `memory`}}"],
+      ["modifyvm", "{{.Name}}", "--cpus", "{{user `cpus`}}"],
+      ["modifyvm", "{{.Name}}", "--nic1", "nat"],
+      ["modifyvm", "{{.Name}}", "--nic2", "hostonly"],
+      ["modifyvm", "{{.Name}}", "--hostonlyadapter2", "vboxnet0"],
+      ["modifyvm", "{{.Name}}", "--nictype1", "Am79C973"],
+      ["modifyvm", "{{.Name}}", "--nictype2", "Am79C973"]
+    ]
+  }],
+  "provisioners": [{
+    "type": "shell",
+    "scripts": [
+      "provisioners/shell/virtualbox.sh"
+    ]
+  }],
+  "variables": {
+    "name": "vb-fedora-24-np",
+    "compression_level": "6",
+    "cpus": "1",
+    "disk_size": "40000",
+    "headless": "false",
+    "memory": "512",
+    "mirror": "http://download.fedoraproject.org/pub/fedora/linux",
+    "ssh_timeout": "60m"
+  }
+}

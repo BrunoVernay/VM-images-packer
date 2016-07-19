@@ -1,0 +1,65 @@
+{
+  "builders": [
+    {
+      "type": "virtualbox-iso",
+      "vm_name": "Fedora-0",
+      "output_directory": "output-Fedora-0",
+      "boot_wait": "8s",
+      "disk_size": 12000,
+      "guest_os_type": "Fedora",
+      "iso_checksum": "",
+      "iso_checksum_type": "sha1",
+      "iso_url": "/mnt/Data/dev/iso/ubuntu-12.04.5-server-i386.iso",
+      "guest_additions_url": "/home/bruno/.config/VirtualBox/VBoxGuestAdditions_{{.Version}}.iso",
+      "guest_additions_sha256": "9ab48f44ac26a6deb374cb5fe6bad103bbf4fdf5186140e2d40ebe48bd01f3ea",
+      "guest_additions_path": "VBoxGuestAdditions.iso",
+      "virtualbox_version_file": ".vbox_version",
+      "ssh_username": "toto",
+      "ssh_password": "toto",
+      "ssh_port": 22,
+      "ssh_wait_timeout": "10m",
+      "headless": false,
+      "vboxmanage": [
+        [ "modifyvm", "{{.Name}}", "--memory", "1024" ],
+        [ "modifyvm", "{{.Name}}", "--ioapic", "on" ],
+        [ "modifyvm", "{{.Name}}", "--cpus", "1" ],
+        [ "modifyvm", "{{.Name}}", "--nic1", "nat" ],
+        [ "modifyvm", "{{.Name}}", "--nic2", "hostonly" ],
+        [ "modifyvm", "{{.Name}}", "--hostonlyadapter2", "vboxnet0" ],
+        [ "modifyvm", "{{.Name}}", "--nictype1", "Am79C973" ],
+        [ "modifyvm", "{{.Name}}", "--nictype2", "Am79C973" ],
+        [ "sharedfolder", "add", "{{.Name}}", "--name", "LTIB", "--hostpath", "/mnt/ltib-vm", "--automount"]
+      ],
+      "http_directory": "kickstart/",
+      "boot_command": [
+        "<esc><esc><enter><wait>",
+          "/install/vmlinuz ",
+          "ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ubu-12.04-fr.ks ",
+          "debian-installer=en_US auto locale=fr_FR kbd-chooser/method=en ",
+          "hostname={{ .Name }} ksdevice=eth0 ",
+          "fb=false debconf/frontend=noninteractive ",
+          "keyboard-configuration/modelcode=pc105 keyboard-configuration/layoutcode=fr ",
+          " console-setup/ask_detect=false ",
+          "initrd=/install/initrd.gz -- <enter>"
+      ],
+      "shutdown_command": "echo 'toto' | sudo -S shutdown -P now"
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "file",
+      "source": "resources/",
+      "destination": "/tmp"
+    },
+    {
+      "type": "shell",
+      "execute_command": "echo 'toto'|sudo -S sh '{{.Path}}'",
+      "scripts": [
+        "scripts/install.sh",
+        "scripts/install-ltib.sh",
+        "scripts/install-openvpn.sh",
+        "scripts/cleanup.sh"
+      ]
+    }
+  ]
+}

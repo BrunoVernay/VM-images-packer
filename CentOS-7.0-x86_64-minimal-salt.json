@@ -1,0 +1,42 @@
+{
+  "builders": [
+    {
+      "type": "virtualbox-iso",
+      "vm_name": "centos70-s",
+      "boot_wait": "8s",
+      "disk_size": 12000,
+      "guest_os_type": "RedHat_64",
+      "iso_checksum": "495a7d50eb7633c4667fbfc5e817bf244697c627",
+      "iso_checksum_type": "sha1",
+      "iso_url": "C:/Users/toto/Downloads/LinuxCD/CentOS-7.0-1406-x86_64-Minimal.iso",
+      "ssh_username": "vagrant",
+      "ssh_password": "vagrant",
+      "ssh_port": 22,
+      "ssh_wait_timeout": "45m",
+      "guest_additions_url": "C:/Programs/VirtualBox/VBoxGuestAdditions.iso",
+      "guest_additions_sha256": "c76dd5ec86f61ad72263ab6d2405723b06badfc2fae57f83ffa5de96f553400d",
+      "guest_additions_path": "VBoxGuestAdditions.iso",
+      "virtualbox_version_file": ".vbox_version",
+      "vboxmanage": [
+        [ "modifyvm", "{{.Name}}", "--memory", "712" ],
+        [ "modifyvm", "{{.Name}}", "--cpus", "2" ],
+        [ "modifyvm", "{{.Name}}", "--nic1", "nat" ],
+        [ "modifyvm", "{{.Name}}", "--nic2", "hostonly" ],
+        [ "modifyvm", "{{.Name}}", "--hostonlyadapter2", "VirtualBox Host-Only Ethernet Adapter" ],
+        [ "modifyvm", "{{.Name}}", "--nictype1", "virtio" ],
+        [ "modifyvm", "{{.Name}}", "--nictype2", "virtio" ]
+      ],
+      "http_directory": "builders/",
+      "boot_command": [
+        "<tab> text selinux=0 ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/kickstart-centos.cfg<enter><wait>"
+      ]
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "salt-masterless",
+      "skip_bootstrap": true,
+      "local_state_tree": "C:/Users/toto/dev/vm/packer/provisioners/salt"      
+    }
+  ]  
+}
