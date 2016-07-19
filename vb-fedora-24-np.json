@@ -23,9 +23,11 @@
     "vboxmanage": [
       ["modifyvm", "{{.Name}}", "--memory", "512"],
       ["modifyvm", "{{.Name}}", "--cpus", "1"],
-      ["modifyvm", "{{.Name}}", "--nic1", "natnetwork"],
-      ["modifyvm", "{{.Name}}", "--nat-network1", "NatNetwork"],
-      ["modifyvm", "{{.Name}}", "--nictype1", "virtio"]
+      ["modifyvm", "{{.Name}}", "--nic1", "nat"],
+      ["modifyvm", "{{.Name}}", "--nic2", "hostonly"],
+      ["modifyvm", "{{.Name}}", "--hostonlyadapter2", "vboxnet0"],
+      ["modifyvm", "{{.Name}}", "--nictype1", "virtio"],
+      ["modifyvm", "{{.Name}}", "--nictype2", "virtio"]
     ]
   }],
   "provisioners": [{
