@@ -7,29 +7,29 @@
     "iso_checksum_type": "sha256",
     "vm_name": "{{user `name`}}",
     "name": "{{user `name`}}",
-    "disk_size": "{{user `disk_size`}}",
-    "headless": "{{user `headless`}}",
+    "disk_size": "30000",
+    "headless": false,
     "http_directory": "kickstart",
     "boot_wait": "5s",
     "boot_command": [
       "<tab> ",
-      "inst.ks=http://{{.HTTPIP}}:{{.HTTPPort}}/fedora-np.ks.cfg ",
-      "biosdevname=0 ",
-      "net.ifnames=0 ",
+      "inst.ks=http://{{.HTTPIP}}:{{.HTTPPort}}/fedora-np.ks.cfg",
       "<enter>"
     ],
-    "ssh_timeout": "{{user `ssh_timeout`}}",
+    "ssh_timeout": "15m",
     "ssh_username": "toto",
     "ssh_password": "toto",
     "shutdown_command": "sudo systemctl poweroff",
     "vboxmanage": [
-      ["modifyvm", "{{.Name}}", "--memory", "{{user `memory`}}"],
-      ["modifyvm", "{{.Name}}", "--cpus", "{{user `cpus`}}"],
+      ["modifyvm", "{{.Name}}", "--memory", "512"],
+      ["modifyvm", "{{.Name}}", "--cpus", "1"],
       ["modifyvm", "{{.Name}}", "--nic1", "nat"],
       ["modifyvm", "{{.Name}}", "--nic2", "hostonly"],
       ["modifyvm", "{{.Name}}", "--hostonlyadapter2", "vboxnet0"],
-      ["modifyvm", "{{.Name}}", "--nictype1", "Am79C973"],
-      ["modifyvm", "{{.Name}}", "--nictype2", "Am79C973"]
+      ["modifyvm", "{{.Name}}", "--cableconnected1", "on"],
+      ["modifyvm", "{{.Name}}", "--cableconnected2", "on"],
+      ["modifyvm", "{{.Name}}", "--nictype1", "virtio"],
+      ["modifyvm", "{{.Name}}", "--nictype2", "virtio"]
     ]
   }],
   "provisioners": [{
@@ -41,11 +41,6 @@
   "variables": {
     "name": "vb-fedora-24-np",
     "compression_level": "6",
-    "cpus": "1",
-    "disk_size": "40000",
-    "headless": "false",
-    "memory": "512",
-    "mirror": "http://download.fedoraproject.org/pub/fedora/linux",
-    "ssh_timeout": "60m"
+    "mirror": "http://download.fedoraproject.org/pub/fedora/linux"
   }
 }
