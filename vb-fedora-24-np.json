@@ -28,6 +28,13 @@
       ["modifyvm", "{{.Name}}", "--hostonlyadapter2", "vboxnet0"],
       ["modifyvm", "{{.Name}}", "--nictype1", "virtio"],
       ["modifyvm", "{{.Name}}", "--nictype2", "virtio"]
+    ],
+    "vboxmanage_post": [
+      ["modifyvm", "{{.Name}}", "--cableconnected1", "on"],
+      ["modifyvm", "{{.Name}}", "--cableconnected2", "on"]
+    ],
+    "export_opts": [
+        ["--ovf20"]
     ]
   }],
   "provisioners": [{
