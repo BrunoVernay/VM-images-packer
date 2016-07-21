@@ -34,7 +34,7 @@
       ["modifyvm", "{{.Name}}", "--cableconnected2", "on"]
     ],
     "export_opts": [
-        ["--ovf20"]
+        "--ovf20"
     ]
   }],
   "provisioners": [{

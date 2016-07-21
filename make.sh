@@ -18,7 +18,7 @@ sudo sh -c 'chmod -R $SUDO_UID:$SUDO_GID /mnt/ltib-vm'
 
 
 # Create the VM
-packr build $VM_NAME.json && VBoxManage import output-$VM_NAME/$VM_NAME.ovf
+time packr build $VM_NAME.json && VBoxManage import output-$VM_NAME/$VM_NAME.ovf
 
 echo "Now you can do: launch.sh $VM_NAME"
 
