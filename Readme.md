@@ -68,7 +68,7 @@ Inspiration:
 - General info (bit old and complicated): http://yum.baseurl.org/wiki/YumMultipleMachineCaching
 
 I guess I should write a script, but the idea is:
-`
+```
 sudo dnf install squid httpd
 
 # cat >> /etc/squid/squid.conf <<EOF
@@ -96,7 +96,7 @@ sudo setsebool httpd_can_network_connect=1
 firewall-cmd --add-service=http --permanent
 
 sudo systemctl restart squid httpd
-`
+```
 
 ### Build the VM
  
