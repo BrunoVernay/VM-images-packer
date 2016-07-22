@@ -20,6 +20,7 @@
     "ssh_username": "toto",
     "ssh_password": "toto",
     "shutdown_command": "sudo systemctl poweroff",
+    "shutdown_timeout": "30s",
     "vboxmanage": [
       ["modifyvm", "{{.Name}}", "--memory", "512"],
       ["modifyvm", "{{.Name}}", "--cpus", "1"],
@@ -27,14 +28,12 @@
       ["modifyvm", "{{.Name}}", "--nic2", "hostonly"],
       ["modifyvm", "{{.Name}}", "--hostonlyadapter2", "vboxnet0"],
       ["modifyvm", "{{.Name}}", "--nictype1", "virtio"],
-      ["modifyvm", "{{.Name}}", "--nictype2", "virtio"]
+      ["modifyvm", "{{.Name}}", "--nictype2", "virtio"],
+      ["modifyvm", "{{.Name}}", "--paravirtprovider", "kvm"] 
     ],
     "vboxmanage_post": [
       ["modifyvm", "{{.Name}}", "--cableconnected1", "on"],
       ["modifyvm", "{{.Name}}", "--cableconnected2", "on"]
-    ],
-    "export_opts": [
-        "--ovf20"
     ]
   }],
   "provisioners": [{

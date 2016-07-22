@@ -17,6 +17,11 @@ OBSOLETE:
 - Ltib-0
 - CentOS-\*
 
+### SSH
+
+Currently login is toto/toto 
+TODO: use a key: ssh_key_path ssh_private_key_file
+
 ## Reproductible builds
 
 The point is to script the build.
@@ -29,6 +34,7 @@ I will try to add:
 - make alternates to VirtualBox
 
 
+
 ## Install
 ### Pre-requisite
  
@@ -36,6 +42,62 @@ I will try to add:
 - Packer v0.7.5 +
 - setup the proxy in all files: use the script `proxy-cleaner.sh`.
  
+### All kind of proxy ...
+
+I deal with 2 proxy:
+- a corporate proxy (zScaler) to access Internet
+- a local proxy (Squid) to speed-up repetitives downloads during the install only!
+
+#### Corporate Proxy
+
+I configure the Guest to use the Corporate proxy to access Internet.
+
+See the script `proxy-cleaner.sh`
+
+The proxy will be configured for DNF and as an environment variable. Look at the post installation in kickstart files.
+
+TODO: Since the Installation itself does not use the corporate proxy anymore I could refactor to use a shell provisioner to setup the proxy.
+
+#### Squid local RPM cache
+
+To avoid repetitive downloads of the same RPM, I setup a local cache with Squid and Apache on my local laptop.
+
+Inspiration:
+- I mostly copied this https://www.berrange.com/posts/2015/12/09/setting-up-a-local-caching-proxy-for-fedora-yum-repositories/
+- See also https://github.com/spacewalkproject/spacewalk/blob/master/proxy/installer/squid.conf
+- General info (bit old and complicated): http://yum.baseurl.org/wiki/YumMultipleMachineCaching
+
+I guess I should write a script, but the idea is:
+`
+sudo dnf install squid httpd
+
+# cat >> /etc/squid/squid.conf <<EOF
+cache_replacement_policy heap LFUDA
+maximum_object_size 8192 MB
+cache_dir aufs /var/spool/squid 16000 16 256 max-size=8589934592
+acl repomd url_regex /repomd\.xml$
+cache deny repomd
+EOF
+
+# cat > /etc/httpd/conf.d/yumcache.conf <<EOF
+ProxyPass /fedora/ http://dl.fedoraproject.org/pub/fedora/linux/
+ProxyPass /fedora-secondary/ http://dl.fedoraproject.org/pub/fedora-secondary/
+ProxyRemote * http://localhost:3128/
+EOF
+
+# You have to explicitly create the Squid folder or SELinux will not allow the Squid service to write them (Squid won't even start without)
+sudo squid -z
+
+# SELinux for the Network:
+sudo setsebool httpd_can_network_relay=1
+sudo setsebool httpd_can_network_connect=1
+
+# Also depending on you config (or only allow from interface vboxnet0)
+firewall-cmd --add-service=http --permanent
+
+sudo systemctl restart squid httpd
+`
+
 ### Build the VM
  
 Simply run `./make.sh filexxx.json`. (It can take hours.)

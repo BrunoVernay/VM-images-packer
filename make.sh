@@ -17,8 +17,12 @@ sudo mkdir -p /mnt/ltib-vm
 sudo sh -c 'chmod -R $SUDO_UID:$SUDO_GID /mnt/ltib-vm'
 
 
+export PACKER_LOG=1
+export PACKER_LOG_PATH="packer-log.txt"
+
 # Create the VM
-time packr build $VM_NAME.json && VBoxManage import output-$VM_NAME/$VM_NAME.ovf
+time packr build $VM_NAME.json 
+VBoxManage import output-$VM_NAME/$VM_NAME.ovf
 
 echo "Now you can do: launch.sh $VM_NAME"
 
