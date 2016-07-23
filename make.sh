@@ -26,11 +26,24 @@ if [ $PACKER_LOG -eq 1 ]; then
 fi
 
 # Create the VM
-time packr build $VM_NAME.json 
+packr build $VM_NAME.json 
+exit
 if [ -f output-$VM_NAME/$VM_NAME.ovf ]; then
+
     [ $PACKER_LOG -eq 1 ] && cp output-$VM_NAME/$VM_NAME.ovf log/${TIMER}_${VM_NAME}.ovf
     VBoxManage import output-$VM_NAME/$VM_NAME.ovf
     [ $PACKER_LOG -eq 1 ] && cp "$VIRTUALBOX_VM/$VM_NAME/$VM_NAME.vbox" log/${TIMER}_${VM_NAME}.vbox
+
+    VBoxManage modifyvm $VM_NAME --vrde off 
+    VBoxManage modifyvm $VM_NAME --nic1 nat 
+    VBoxManage modifyvm $VM_NAME --nic2 hostonly 
+    VBoxManage modifyvm $VM_NAME --hostonlyadapter2 vboxnet0 
+    VBoxManage modifyvm $VM_NAME --nictype1 virtio 
+    VBoxManage modifyvm $VM_NAME --nictype2 virtio 
+    VBoxManage modifyvm $VM_NAME --cableconnected1 on 
+    VBoxManage modifyvm $VM_NAME --cableconnected2 on
+      
+    [ $PACKER_LOG -eq 1 ] && cp "$VIRTUALBOX_VM/$VM_NAME/$VM_NAME.vbox" log/${TIMER}_${VM_NAME}_mod.vbox
     echo "Now you can do: launch.sh $VM_NAME"
 fi
 
