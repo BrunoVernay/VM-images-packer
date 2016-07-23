@@ -93,7 +93,8 @@ sudo setsebool httpd_can_network_relay=1
 sudo setsebool httpd_can_network_connect=1
 
 # Also depending on you config (or only allow from interface vboxnet0)
-firewall-cmd --add-service=http --permanent
+sudo firewall-cmd --zone=internal --change-interface=vboxnet0
+sudo firewall-cmd --zone=internal --add-service=http
 
 sudo systemctl restart squid httpd
 ```

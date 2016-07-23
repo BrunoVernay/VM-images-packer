@@ -1,8 +1,14 @@
 # Cache objects
 packer_cache/
 
+# Used to store the proxy (see proxy_cleaner.sh)
+.proxy_valued
+
 # For built boxes
 *.box
+
+log/
+logs/
 
 # outputs
 output-*/
