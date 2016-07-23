@@ -24,6 +24,31 @@
       ["modifyvm", "{{.Name}}", "--memory", "1024"],
       ["modifyvm", "{{.Name}}", "--cpus", "1"],
       ["modifyvm", "{{.Name}}", "--paravirtprovider", "kvm"]
+    ],
+    "vboxmanage_post": [
+      ["showvminfo", "{{.Name}}", "--details"],
+      ["showvminfo", "{{.Name}}", "--details"],
+      ["showvminfo", "{{.Name}}", "--details"],
+      ["showvminfo", "{{.Name}}", "--details"],
+      ["showvminfo", "{{.Name}}", "--details"],
+      ["showvminfo", "{{.Name}}", "--details"],
+      ["showvminfo", "{{.Name}}", "--details"],
+      ["showvminfo", "{{.Name}}", "--details"],
+      ["showvminfo", "{{.Name}}", "--details"],
+      ["showvminfo", "{{.Name}}", "--details"],
+      ["showvminfo", "{{.Name}}", "--details"],
+      ["showvminfo", "{{.Name}}", "--details"],
+      ["showvminfo", "{{.Name}}", "--details"],
+      ["modifyvm", "{{.Name}}", "--vrde", "off"],
+      ["modifyvm", "{{.Name}}", "--nic1", "nat"],
+      ["modifyvm", "{{.Name}}", "--nic2", "hostonly"],
+      ["modifyvm", "{{.Name}}", "--hostonlyadapter2", "vboxnet0"],
+      ["modifyvm", "{{.Name}}", "--nictype1", "virtio"],
+      ["modifyvm", "{{.Name}}", "--nictype2", "virtio"],
+      ["modifyvm", "{{.Name}}", "--nicpromisc1", "allow-all"],
+      ["modifyvm", "{{.Name}}", "--nicpromisc2", "allow-all"],
+      ["modifyvm", "{{.Name}}", "--cableconnected1", "on"],
+      ["modifyvm", "{{.Name}}", "--cableconnected2", "on"]
     ]
   }],
   "provisioners": [{

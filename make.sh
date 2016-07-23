@@ -27,7 +27,6 @@ fi
 
 # Create the VM
 packr build $VM_NAME.json 
-exit
 if [ -f output-$VM_NAME/$VM_NAME.ovf ]; then
 
     [ $PACKER_LOG -eq 1 ] && cp output-$VM_NAME/$VM_NAME.ovf log/${TIMER}_${VM_NAME}.ovf
