@@ -8,7 +8,7 @@
     "vm_name": "{{user `name`}}",
     "name": "{{user `name`}}",
     "disk_size": "30000",
-    "headless": false,
+    "headless": true,
     "http_directory": "kickstart",
     "boot_wait": "5s",
     "boot_command": [
@@ -26,19 +26,6 @@
       ["modifyvm", "{{.Name}}", "--paravirtprovider", "kvm"]
     ],
     "vboxmanage_post": [
-      ["showvminfo", "{{.Name}}", "--details"],
-      ["showvminfo", "{{.Name}}", "--details"],
-      ["showvminfo", "{{.Name}}", "--details"],
-      ["showvminfo", "{{.Name}}", "--details"],
-      ["showvminfo", "{{.Name}}", "--details"],
-      ["showvminfo", "{{.Name}}", "--details"],
-      ["showvminfo", "{{.Name}}", "--details"],
-      ["showvminfo", "{{.Name}}", "--details"],
-      ["showvminfo", "{{.Name}}", "--details"],
-      ["showvminfo", "{{.Name}}", "--details"],
-      ["showvminfo", "{{.Name}}", "--details"],
-      ["showvminfo", "{{.Name}}", "--details"],
-      ["showvminfo", "{{.Name}}", "--details"],
       ["modifyvm", "{{.Name}}", "--vrde", "off"],
       ["modifyvm", "{{.Name}}", "--nic1", "nat"],
       ["modifyvm", "{{.Name}}", "--nic2", "hostonly"],

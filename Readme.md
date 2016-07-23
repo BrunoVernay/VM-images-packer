@@ -62,16 +62,19 @@ TODO: Since the Installation itself does not use the corporate proxy anymore I c
 
 To avoid repetitive downloads of the same RPM, I setup a local cache with Squid and Apache on my local laptop.
 
+Once installed (see below), you can launch it with `rpm-cache/start.sh` I did not make it permanent, because I do not want to have Squid and Apache and security settings always on.
+You kickstart file must then use http://10.0.2.2/ or http://192.168.56.1/ depending on the interface setup in the packer template.
+
 Inspiration:
 - I mostly copied this https://www.berrange.com/posts/2015/12/09/setting-up-a-local-caching-proxy-for-fedora-yum-repositories/
 - See also https://github.com/spacewalkproject/spacewalk/blob/master/proxy/installer/squid.conf
 - General info (bit old and complicated): http://yum.baseurl.org/wiki/YumMultipleMachineCaching
 
-I guess I should write a script, but the idea is:
+An install script would looks like this (you may want to manually edit your squid config file):
 ```
 sudo dnf install squid httpd
 
-# cat >> /etc/squid/squid.conf <<EOF
+sudo cat >> /etc/squid/squid.conf <<EOF
 cache_replacement_policy heap LFUDA
 maximum_object_size 8192 MB
 cache_dir aufs /var/spool/squid 16000 16 256 max-size=8589934592
@@ -79,24 +82,13 @@ acl repomd url_regex /repomd\.xml$
 cache deny repomd
 EOF
 
-# cat > /etc/httpd/conf.d/yumcache.conf <<EOF
+sudo cat > /etc/httpd/conf.d/yumcache.conf <<EOF
 ProxyPass /fedora/ http://dl.fedoraproject.org/pub/fedora/linux/
-ProxyPass /fedora-secondary/ http://dl.fedoraproject.org/pub/fedora-secondary/
 ProxyRemote * http://localhost:3128/
 EOF
 
 # You have to explicitly create the Squid folder or SELinux will not allow the Squid service to write them (Squid won't even start without)
 sudo squid -z
-
-# SELinux for the Network:
-sudo setsebool httpd_can_network_relay=1
-sudo setsebool httpd_can_network_connect=1
-
-# Also depending on you config (or only allow from interface vboxnet0)
-sudo firewall-cmd --zone=internal --change-interface=vboxnet0
-sudo firewall-cmd --zone=internal --add-service=http
-
-sudo systemctl restart squid httpd
 ```
 
 ### Build the VM

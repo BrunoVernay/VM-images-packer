@@ -17,16 +17,16 @@ sudo mkdir -p /mnt/ltib-vm
 sudo sh -c 'chmod -R $SUDO_UID:$SUDO_GID /mnt/ltib-vm'
 
 
-VIRTUALBOX_VM="~/VirtualBoxVM"
+VIRTUALBOX_VM=~/VirtualBoxVM
 export PACKER_LOG=1
 if [ $PACKER_LOG -eq 1 ]; then
     mkdir -p log
-    export TIMER=$(date +"%F_%Hh%M")
+    TIMER=$(date +"%F_%Hh%M")
     export PACKER_LOG_PATH="log/${TIMER}_packer.txt"
 fi
 
 # Create the VM
-packr build $VM_NAME.json 
+time packr build $VM_NAME.json 
 if [ -f output-$VM_NAME/$VM_NAME.ovf ]; then
 
     [ $PACKER_LOG -eq 1 ] && cp output-$VM_NAME/$VM_NAME.ovf log/${TIMER}_${VM_NAME}.ovf
