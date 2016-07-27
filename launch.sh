@@ -7,7 +7,7 @@ export VM_NAME="${1%.json}"
 
 
 VBoxManage startvm $VM_NAME    ## --type headless
-sleep 12
+sleep 20
 
 #vboxmanage showvminfo $VM_NAME --details
 #VBoxManage guestproperty enumerate $VM_NAME

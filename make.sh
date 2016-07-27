@@ -34,6 +34,7 @@ if [ -f output-$VM_NAME/$VM_NAME.ovf ]; then
     [ $PACKER_LOG -eq 1 ] && cp "$VIRTUALBOX_VM/$VM_NAME/$VM_NAME.vbox" log/${TIMER}_${VM_NAME}.vbox
 
     VBoxManage modifyvm $VM_NAME --vrde off 
+    VBoxManage modifyvm $VM_NAME --audio none 
     VBoxManage modifyvm $VM_NAME --nic1 nat 
     VBoxManage modifyvm $VM_NAME --nic2 hostonly 
     VBoxManage modifyvm $VM_NAME --hostonlyadapter2 vboxnet0 

@@ -21,8 +21,9 @@
     "ssh_password": "toto",
     "shutdown_command": "sudo systemctl poweroff",
     "vboxmanage": [
-      ["modifyvm", "{{.Name}}", "--memory", "1024"],
+      ["modifyvm", "{{.Name}}", "--memory", "512"],
       ["modifyvm", "{{.Name}}", "--cpus", "1"],
+      ["modifyvm", "{{.Name}}", "--audio", "none"],
       ["modifyvm", "{{.Name}}", "--paravirtprovider", "kvm"]
     ],
     "vboxmanage_post": [
