@@ -38,7 +38,7 @@ I will try to add:
 ## Install
 ### Pre-requisite
  
-- VirtualBox v4.3.20 +
+- VirtualBox v5.1.3 +
 - Packer v0.7.5 +
 - setup the proxy in all files: use the script `proxy-cleaner.sh`.
  
