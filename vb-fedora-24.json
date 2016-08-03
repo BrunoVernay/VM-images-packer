@@ -7,7 +7,7 @@
     "iso_checksum_type": "sha256",
     "vm_name": "{{user `name`}}",
     "name": "{{user `name`}}",
-    "disk_size": "30000",
+    "disk_size": "20000",
     "headless": true,
     "http_directory": "kickstart",
     "boot_wait": "5s",
@@ -18,7 +18,7 @@
     ],
     "ssh_timeout": "15m",
     "ssh_username": "toto",
-    "ssh_password": "toto",
+    "ssh_private_key_file": "/home/bruno/.ssh/id_ecdsa",
     "shutdown_command": "sudo systemctl poweroff",
     "vboxmanage": [
       ["modifyvm", "{{.Name}}", "--memory", "512"],
@@ -38,7 +38,9 @@
   "provisioners": [{
     "type": "shell",
     "scripts": [
-      "provisioners/shell/virtualbox.sh"
+      "provisioners/shell/proxy.sh",
+      "provisioners/shell/virtualbox.sh",
+      "provisioners/shell/rpmfusion.sh"
     ]
   }],
   "variables": {

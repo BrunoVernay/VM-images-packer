@@ -102,6 +102,9 @@ And then `./launch.sh filexxx.json`
  
 The proxy should not be asking for a password.  But in any case: Be careful not to commit your proxy password in the repository!
 
+Check the SSH key in kickstart (public) and Packer json template (path to private)
+
+You may add password in the kickstart for debugging.
 
 ### Fedora
 
