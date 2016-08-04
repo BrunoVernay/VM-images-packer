@@ -12,15 +12,9 @@ WORKING:
 - vb-fedora-24 VirtualBox (Oracle repo)  Fedora 24 
 - vbrpmfusion-fedora-24 VirtualBox (RPMFusion repo)  Fedora 24 
 
-
 OBSOLETE:
 - Ltib-0
 - CentOS-\*
-
-### SSH
-
-Currently login is toto/toto 
-TODO: use a key: ssh_key_path ssh_private_key_file
 
 ## Reproductible builds
 
@@ -34,13 +28,14 @@ I will try to add:
 - make alternates to VirtualBox
 
 
-
 ## Install
 ### Pre-requisite
  
 - VirtualBox v5.1.3 +
 - Packer v0.7.5 +
-- setup the proxy in all files: use the script `proxy-cleaner.sh`.
+- Eventually setup your corporate proxy in all files: use the script `proxy-cleaner.sh`.
+- Setup your SSH key (or enable passwords) in the Packer file (.json) and the kickstart file
+- Setup your local RPM cache (or change the kickstart file)
  
 ### All kind of proxy ...
 
@@ -54,16 +49,16 @@ I configure the Guest to use the Corporate proxy to access Internet.
 
 See the script `proxy-cleaner.sh`
 
-The proxy will be configured for DNF and as an environment variable. Look at the post installation in kickstart files.
+The proxy will be configured for DNF and as an environment variable. This is done in a shell provisioner.
 
-TODO: Since the Installation itself does not use the corporate proxy anymore I could refactor to use a shell provisioner to setup the proxy.
+Also do not forget to configure the local RPM cache (/etc/squid/squid.conf) to use the Corporate proxy.
 
 #### Squid local RPM cache
 
 To avoid repetitive downloads of the same RPM, I setup a local cache with Squid and Apache on my local laptop.
 
 Once installed (see below), you can launch it with `rpm-cache/start.sh` I did not make it permanent, because I do not want to have Squid and Apache and security settings always on.
-You kickstart file must then use http://10.0.2.2/ or http://192.168.56.1/ depending on the interface setup in the packer template.
+Your kickstart file must then use http://10.0.2.2/ or http://192.168.56.1/ depending on the interface setup in the packer template.
 
 Inspiration:
 - I mostly copied this https://www.berrange.com/posts/2015/12/09/setting-up-a-local-caching-proxy-for-fedora-yum-repositories/
@@ -75,6 +70,9 @@ An install script would looks like this (you may want to manually edit your squi
 sudo dnf install squid httpd
 
 sudo cat >> /etc/squid/squid.conf <<EOF
+# Uncomment the following 2 lines to use a Corporate proxy (see http://wiki.squid-cache.org/Features/CacheHierarchy)
+#cache_peer Proxy.MyCorporate.net parent 80 0 no-query default login=YourLogin
+#never_direct allow all
 cache_replacement_policy heap LFUDA
 maximum_object_size 8192 MB
 cache_dir aufs /var/spool/squid 16000 16 256 max-size=8589934592
@@ -96,8 +94,6 @@ sudo squid -z
 Simply run `./make.sh filexxx.json`. (It can take hours.)
 And then `./launch.sh filexxx.json`
 
-## More install info
- 
 ### Security
  
 The proxy should not be asking for a password.  But in any case: Be careful not to commit your proxy password in the repository!
@@ -106,6 +102,8 @@ Check the SSH key in kickstart (public) and Packer json template (path to privat
 
 You may add password in the kickstart for debugging.
 
+## More install info
+ 
 ### Fedora
 
 For usual stuff
