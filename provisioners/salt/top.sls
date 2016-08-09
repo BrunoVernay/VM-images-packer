@@ -1,5 +1,0 @@
-base:
-  '*':
-    - main
-    - webserver
-    
