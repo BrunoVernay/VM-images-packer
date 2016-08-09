@@ -42,6 +42,9 @@
       "provisioners/shell/virtualbox.sh",
       "provisioners/shell/rpmfusion.sh"
     ]
+  },{
+  "type":"ansible",
+  "playbook_file":"provisioners/ansible/playbook.yml"
   }],
   "variables": {
     "name": "vb-fedora-24",

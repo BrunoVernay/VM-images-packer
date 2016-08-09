@@ -1,0 +1,9 @@
+---
+# Nothing to do
+#
+- name: Whatever
+  hosts: all
+  tasks:
+  - name: Dummy task
+    setup: 
+

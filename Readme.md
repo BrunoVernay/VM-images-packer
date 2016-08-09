@@ -8,13 +8,9 @@ All images have:
 - proxy support except when the name ends with "-np" (**n**o **p**roxy).
 - VirtualBox Guest Additions
 
-WORKING:
-- vb-fedora-24 VirtualBox (Oracle repo)  Fedora 24 
-- vbrpmfusion-fedora-24 VirtualBox (RPMFusion repo)  Fedora 24 
+- vb-fedora-24 (VirtualBox from Oracle repo)  Fedora 24 
+- vbrpmfusion-fedora-24 (VirtualBox from RPMFusion repo)  Fedora 24 
 
-OBSOLETE:
-- Ltib-0
-- CentOS-\*
 
 ## Reproductible builds
 
@@ -24,7 +20,6 @@ The point is to script the build.
 
 I will try to add:
 - libvirt and some tinier images
-- Ansible support (instead of Salt)
 - make alternates to VirtualBox
 
 
@@ -40,7 +35,7 @@ I will try to add:
 ### All kind of proxy ...
 
 I deal with 2 proxy:
-- a corporate proxy (zScaler) to access Internet
+- a corporate proxy (ex: zScaler) to access Internet
 - a local proxy (Squid) to speed-up repetitives downloads during the install only!
 
 #### Corporate Proxy
@@ -91,12 +86,14 @@ sudo squid -z
 
 ### Build the VM
  
-Simply run `./make.sh filexxx.json`. (It can take hours.)
-And then `./launch.sh filexxx.json`
+Simply run `./make.sh filexxx<.json>`. (It can take hours.)
+And then `./launch.sh filexxx<.json>`
 
 ### Security
  
 The proxy should not be asking for a password.  But in any case: Be careful not to commit your proxy password in the repository!
+
+SELinux is enabled in the Guest. (There is one line to uncomment in the kickstart file to disable it)
 
 Check the SSH key in kickstart (public) and Packer json template (path to private)
 
@@ -112,22 +109,11 @@ For usual stuff
 
 For pro constraints
 
-### Ubuntu
-
-The supported version is Ubuntu 12.04 "Precise".  It *may* also work with more recent version.
-
-We use a KickStart file to automate the installation.
-
-Package installation is tricky (apt-get)
-
 ### Virtualbox
 
 Useful command lines available: https://www.virtualbox.org/manual/ch08.html
 
-You will have to change the name in the path to the VirtualBox guest addition `guest_additions_url`, in the `Ltib-0.json` file.
-We could have use environment variables https://www.packer.io/docs/templates/user-variables.html or use the online file "http:// ...". But this is easier and more efficient.
-
-We create a **shared folder** to ease exchanging files with the host. See files `make.sh` and `Ltib-0.json`.
-On the host: `/mnt/ltib-vm` and on the guest: `/media/sf_LTIB`.
+We could create a **shared folder** to ease exchanging files with the host. See files `make.sh` and `filexxx.json`.
+On the host: `/mnt/guest_vm` and on the guest: `/media/host_machine`.
 
 
