@@ -12,6 +12,8 @@ set -x
 # Uncomment this if you want to install Guest Additions with support for X
 # sudo dnf -y install xorg-x11-server-Xorg
 
+#sudo setenforce Permissive
+
 sudo systemctl start dkms
 sudo systemctl enable dkms
 
