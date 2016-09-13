@@ -8,7 +8,7 @@
     "vm_name": "{{user `name`}}",
     "name": "{{user `name`}}",
     "disk_size": "40000",
-    "headless": false,
+    "headless": true,
     "http_directory": "kickstart",
     "boot_wait": "5s",
     "boot_command": [
@@ -38,7 +38,8 @@
   "provisioners": [{
     "type": "shell",
     "scripts": [
-      "provisioners/shell/virtualbox.sh"
+      "provisioners/shell/virtualbox.sh",
+      "provisioners/shell/openstack.sh"
     ]
   },{
   "type":"ansible",

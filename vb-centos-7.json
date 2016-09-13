@@ -39,7 +39,8 @@
     "type": "shell",
     "scripts": [
       "provisioners/shell/proxy.sh",
-      "provisioners/shell/virtualbox.sh"
+      "provisioners/shell/virtualbox.sh",
+      "provisioners/shell/openstack.sh"
     ]
   },{
   "type":"ansible",
