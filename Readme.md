@@ -100,10 +100,12 @@ You may add password in the kickstart for debugging.
 ## Network
 
 I setup 2 network interfaces: 
-- one to access Internet (Eth0 DHCP 10.0.2.0/24 "NAT")
-- one for the host to access the guest (Eth1 DHCP 192.168.56.[101-254] "Host-only")
+- one to access Internet (Eth0 enp0s3 DHCP 10.0.2.0/24 "NAT")
+- one for the host to access the guest (Eth1 enp0s8 DHCP 192.168.56.[101-254] "Host-only")
 
 Once the VirtualBox extension are installed, one can ask for the "Host-only" IP with VBoxManage tools and SSH to the box. (see the launch.sh script)
+
+Beware that the VirtualBox `virtio` driver has good perfomance, but CentOS is not capable of using enp0s3 names with it. CentOs will fallback on eth0 names!! See https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/Networking_Guide/sec_Troubleshooting_Network_Device_Naming.html
 
 ## More install info
  
@@ -111,9 +113,14 @@ Once the VirtualBox extension are installed, one can ask for the "Host-only" IP 
 
 For usual stuff
 
-### CentOS
+### OpenStack CentOS 7
 
-For pro constraints and OpenStack all-in-one (with RDO)
+OpenStack all-in-one (with RDO Packstack)
+Sadly launching `packstack --allinone` directly trigger an error. (Cannot access `ip`)
+One has to SSH to the machine to launch it by hand.
+
+Also to access the http dashboard, it would be easier to have a fixed address (I may add that later. for now I put the IP in my host hosts file and use the name "openstack.home") I don't know how to tell packstack to use the `host-only` interface.
+
 
 ### Virtualbox
 
