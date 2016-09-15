@@ -49,7 +49,7 @@ The proxy will be configured for DNF and as an environment variable. This is don
 Also do not forget to configure the local RPM cache (/etc/squid/squid.conf) to use the Corporate proxy.
 
 #### Squid local RPM cache
-
+ 
 To avoid repetitive downloads of the same RPM, I setup a local cache with Squid and Apache on my local laptop.
 
 Once installed (see below), you can launch it with `rpm-cache/start.sh` I did not make it permanent, because I do not want to have Squid and Apache and security settings always on.
@@ -75,10 +75,7 @@ acl repomd url_regex /repomd\.xml$
 cache deny repomd
 EOF
 
-sudo cat > /etc/httpd/conf.d/yumcache.conf <<EOF
-ProxyPass /fedora/ http://dl.fedoraproject.org/pub/fedora/linux/
-ProxyRemote * http://localhost:3128/
-EOF
+sudo cp rpm-cache/dnfcache.conf /etc/httpd/conf.d/
 
 # You have to explicitly create the Squid folder or SELinux will not allow the Squid service to write them (Squid won't even start without)
 sudo squid -z
@@ -99,6 +96,15 @@ Check the SSH key in kickstart (public) and Packer json template (path to privat
 
 You may add password in the kickstart for debugging.
 
+
+## Network
+
+I setup 2 network interfaces: 
+- one to access Internet (Eth0 DHCP 10.0.2.0/24 "NAT")
+- one for the host to access the guest (Eth1 DHCP 192.168.56.[101-254] "Host-only")
+
+Once the VirtualBox extension are installed, one can ask for the "Host-only" IP with VBoxManage tools and SSH to the box. (see the launch.sh script)
+
 ## More install info
  
 ### Fedora
@@ -107,7 +113,7 @@ For usual stuff
 
 ### CentOS
 
-For pro constraints
+For pro constraints and OpenStack all-in-one (with RDO)
 
 ### Virtualbox
 

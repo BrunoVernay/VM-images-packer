@@ -16,7 +16,7 @@ VBoxManage startvm $VM_NAME  --type headless
 
 #vboxmanage showvminfo $VM_NAME --details
 #VBoxManage guestproperty enumerate $VM_NAME
-export VM_IP=$(vboxmanage guestproperty wait $VM_NAME "/VirtualBox/GuestInfo/Net/1/V4/IP" --timeout 25000 | sed -n "s/.* \([0-9\.]*\), .*/\1/gp")
+export VM_IP=$(vboxmanage guestproperty wait $VM_NAME "/VirtualBox/GuestInfo/Net/1/V4/IP" --timeout 50000 | sed -n "s/.* \([0-9\.]*\), .*/\1/gp")
 
 echo "VM_IP: $VM_IP"
 

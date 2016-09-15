@@ -6,8 +6,11 @@ sudo yum -y remove NetworkManager firewalld
 
 sudo systemctl enable network
 
-sudo yum install -y centos-release-openstack-mitaka openstack-packstack
+# Must be done in 2 steps: one is the repo, the second is the package
+sudo yum install -y centos-release-openstack-mitaka 
+sudo yum update -y
+sudo yum install -y openstack-packstack
 
-# command not found
-#packstack --allinone
+# ip command not found (not in the PATH?)
+#sudo packstack --allinone
 
