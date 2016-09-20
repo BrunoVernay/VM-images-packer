@@ -11,6 +11,5 @@ sudo yum install -y centos-release-openstack-mitaka
 sudo yum update -y
 sudo yum install -y openstack-packstack
 
-# ip command not found (not in the PATH?)
-#sudo packstack --allinone
+sudo packstack --allinone
 
