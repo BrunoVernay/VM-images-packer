@@ -13,7 +13,7 @@
     "boot_wait": "5s",
     "boot_command": [
       "<tab> ",
-      "inst.ks=http://{{.HTTPIP}}:{{.HTTPPort}}/centos.ks.cfg",
+      "inst.ks=http://{{.HTTPIP}}:{{.HTTPPort}}/centos-openstack.ks.cfg",
       "<enter>"
     ],
     "ssh_timeout": "15m",
@@ -43,7 +43,7 @@
   "playbook_file":"provisioners/ansible/playbook.yml"
   }],
   "variables": {
-    "name": "vb-centos-7",
+    "name": "vb-centos7-openstack",
     "compression_level": "6",
     "mirror": "http://mirrors.ircam.fr/pub/CentOS"
   }
