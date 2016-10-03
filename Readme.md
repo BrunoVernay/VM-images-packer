@@ -116,11 +116,9 @@ For usual stuff
 ### OpenStack CentOS 7
 
 OpenStack all-in-one (with RDO Packstack)
-Sadly launching `packstack --allinone` directly trigger an error. (Cannot access `ip`)
-One has to SSH to the machine to launch it by hand.
+(The OpenStack install fails if there is a proxy.)
 
-Also to access the http dashboard, it would be easier to have a fixed address (I may add that later. for now I put the IP in my host hosts file and use the name "openstack.home") I don't know how to tell packstack to use the `host-only` interface.
-
+OpenStack is huge.
 
 ### Virtualbox
 
