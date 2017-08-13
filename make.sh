@@ -15,7 +15,8 @@ rm -rf output-"$VM_NAME"/
 sudo mkdir -p /mnt/guest_vm
 sudo sh -c 'chown -R $SUDO_UID:$SUDO_GID /mnt/guest_vm'
 
-# Check before starting all the work
+# Check before starting all the work (require package "pykickstart")
+for i in  kickstart/*.*; do ksvalidator "$i" || exit 1; done
 ansible-playbook --syntax-check provisioners/ansible/*.yml || exit 1
 
 # This is where I put all my VirtualBox machines
