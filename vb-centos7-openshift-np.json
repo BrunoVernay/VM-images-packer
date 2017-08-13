@@ -1,0 +1,47 @@
+{
+  "builders": [{
+    "type": "virtualbox-iso",
+    "guest_os_type": "RedHat_64",
+    "iso_url": "/opt/iso/CentOS-7-x86_64-DVD-1611.iso",
+    "iso_checksum": "c455ee948e872ad2194bdddd39045b83634e8613249182b88f549bb2319d97eb",
+    "iso_checksum_type": "sha256",
+    "vm_name": "{{user `name`}}",
+    "name": "{{user `name`}}",
+    "disk_size": "8000",
+    "hard_drive_interface":"sata",
+    "headless": true,
+    "http_directory": "kickstart",
+    "boot_wait": "5s",
+    "boot_command": [
+      "<tab> ",
+      "inst.ks=http://{{.HTTPIP}}:{{.HTTPPort}}/centos-openshift.ks.cfg",
+      "<enter>"
+    ],
+    "ssh_timeout": "15m",
+    "ssh_username": "toto",
+    "ssh_private_key_file": "/home/bruno/.ssh/id_ecdsa",
+    "shutdown_command": "sudo systemctl poweroff",
+    "vboxmanage": [
+      ["modifyvm", "{{.Name}}", "--memory", "8096"],
+      ["modifyvm", "{{.Name}}", "--cpus", "2"],
+      ["modifyvm", "{{.Name}}", "--audio", "none"],
+      ["modifyvm", "{{.Name}}", "--paravirtprovider", "kvm"],
+      ["modifyvm", "{{.Name}}", "--vrde", "off"],
+      ["modifyvm", "{{.Name}}", "--nic1", "nat"],
+      ["modifyvm", "{{.Name}}", "--nic2", "hostonly"],
+      ["modifyvm", "{{.Name}}", "--hostonlyadapter2", "vboxnet0"]
+    ]
+  }],
+  "provisioners": [{
+    "type": "shell",
+    "scripts": [
+      "provisioners/shell/virtualbox.sh",
+      "provisioners/shell/openshift.sh"
+    ]
+  }],
+  "variables": {
+    "name": "vb-centos7-openshift-np",
+    "compression_level": "6",
+    "mirror": "http://mirrors.ircam.fr/pub/CentOS"
+  }
+}
