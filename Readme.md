@@ -107,6 +107,20 @@ Once the VirtualBox extension are installed, one can ask for the "Host-only" IP 
 
 Beware that the VirtualBox `virtio` driver has good perfomance, but CentOS is not capable of using enp0s3 names with it. CentOs will fallback on eth0 names!! See https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/Networking_Guide/sec_Troubleshooting_Network_Device_Naming.html
 
+## Disk
+
+Usually, the default install is OK. You can let `autopart` in kickstart do its job.
+
+But you may need a particular setup. Typically, OpenShift master (in my example) requires to have free space in the Volume Group (LVM). In this case, the kickstart contains specific instruction.
+
+If you need 2 disks, it is difficult to automate reliably! Instructions are specific to VirtualBox (Packer does not help you here) and if you want to recover errors, you may need particular scripts (outside Packer). I decided to stop te complexity to just creating the second disk. In case of errors, you have to use the VirtualBox GUI "File/Virtual Media Manager". Or on the command line you could do 
+```
+vboxmanage list hdds
+VBoxManage storageattach    <uuid|vmname>  --storagectl <name> --device <number>  --medium none # Eventually detach the disk
+vboxmanage closemedium disk <uuid|filename> --delete  
+```
+Also note that the second disk will be created in the current folder as VDI, then exported in VirtualBox  as VMDK. 
+
 ## More install info
  
 ### Fedora
