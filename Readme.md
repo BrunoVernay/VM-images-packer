@@ -1,6 +1,6 @@
 # Creates VM, Images ... with Packer 
 
-Focus on supporting proxy.
+Focus on supporting proxy. (But (un)commenting a few lines and you get non-proxied access)
 
 ## Images
 
@@ -37,6 +37,8 @@ I will try to add:
 I deal with 2 proxy:
 - a corporate proxy (ex: zScaler) to access Internet
 - a local proxy (Squid) to speed-up repetitives downloads during the install only!
+
+If you don't need them, it is easy to change the kickstart file to link to non-proxied sources.
 
 #### Corporate Proxy
 
@@ -94,7 +96,7 @@ SELinux is enabled in the Guest. (There is one line to uncomment in the kickstar
 
 Check the SSH key in kickstart (public) and Packer json template (path to private)
 
-You may add password in the kickstart for debugging.
+You may addi root password in the kickstart for debugging.
 
 
 ## Network
@@ -122,7 +124,17 @@ vboxmanage closemedium disk <uuid|filename> --delete
 Also note that the second disk will be created in the current folder as VDI, then exported in VirtualBox  as VMDK. 
 
 ## More install info
- 
+
+### OpenShift
+
+OpenShift Origin : There is a Master machine and a Node machine.
+
+They each use different disk setup to illustrate the possibilities. 
+
+They use a static IP, so the VirtualBox addition could be avoided (it would speed up install and reduce the size). Actually, the kickstart file is almost suffisient. 
+
+I tried to reduce the size of the Docker-Storage-Setup. But it is hard to go beyond 8Go. Maybe we need to play with parameters (DATA_SIZE, DATA_MINIMUM_SIZE ...)
+
 ### Fedora
 
 For usual stuff
@@ -135,7 +147,7 @@ OpenStack all-in-one (with RDO Packstack)
 OpenStack is huge.
 
 ### Virtualbox
-
+ 
 Useful command lines available: https://www.virtualbox.org/manual/ch08.html
 
 We could create a **shared folder** to ease exchanging files with the host. See files `make.sh` and `filexxx.json`.

@@ -1,17 +1,11 @@
 #!/bin/bash
 # Configure OpenShift  
 
+# The disk is attached (VBox Post Manage),  We can run
+#docker-storage-setup
 
+#systemctl enable docker.service
+#systemctl start docker.service
 
-#sudo systemctl enable network
-
-#for i in {1..50}; do ping -c1 www.google.com &> /dev/null && break; done
-/usr/sbin/ip a
-cat /etc/resolv.conf
-#cat -lh /etc/
-
-
-
-sudo yum update -y
-
+#sudo yum update -y
 

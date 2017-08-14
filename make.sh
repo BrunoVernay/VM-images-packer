@@ -10,6 +10,7 @@ export VM_NAME=${VM_NAME%.json}
 VBoxManage controlvm $VM_NAME poweroff
 VBoxManage unregistervm $VM_NAME --delete
 rm -rf output-"$VM_NAME"/
+for i in *.vdi; do vboxmanage closemedium disk $i --delete ; done
 
 # Create shared folder (If you change this path change also in Packer: .json)
 sudo mkdir -p /mnt/guest_vm
