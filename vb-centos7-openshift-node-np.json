@@ -10,7 +10,7 @@
     "name": "{{user `name`}}",
     "hard_drive_interface":"sata",
     "sata_port_count":"2",
-    "disk_size": "4000",
+    "disk_size": "5000",
     "headless": true,
     "http_directory": "kickstart",
     "boot_wait": "5s",
@@ -32,7 +32,7 @@
       ["modifyvm", "{{.Name}}", "--nic1", "nat"],
       ["modifyvm", "{{.Name}}", "--nic2", "hostonly"],
       ["modifyvm", "{{.Name}}", "--hostonlyadapter2", "vboxnet0"],
-      ["createmedium", "disk", "--filename", "{{.Name}}.vdi", "--size", "8194"],
+      ["createmedium", "disk", "--filename", "{{.Name}}.vdi", "--size", "8192"],
       ["storageattach", "{{.Name}}", "--storagectl", "SATA Controller", "--port", "1", "--type", "hdd", "--medium", "{{.Name}}.vdi"]
     ]
   }],

@@ -135,6 +135,8 @@ They use a static IP, so the VirtualBox addition could be avoided (it would spee
 
 I tried to reduce the size of the Docker-Storage-Setup. But it is hard to go beyond 8Go. Maybe we need to play with parameters (DATA_SIZE, DATA_MINIMUM_SIZE ...)
 
+Maybe I go too far with the kickstart file and an ansible or shell script would be more the right tool for the job. But currently, nothing too complex is done.
+
 ### Fedora
 
 For usual stuff
