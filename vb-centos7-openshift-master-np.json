@@ -1,4 +1,5 @@
 {
+  "_comment": "Very limited Comment",
   "builders": [{
     "type": "virtualbox-iso",
     "guest_os_type": "RedHat_64",
@@ -7,14 +8,14 @@
     "iso_checksum_type": "sha256",
     "vm_name": "{{user `name`}}",
     "name": "{{user `name`}}",
-    "disk_size": "8000",
+    "disk_size": "10000",
     "hard_drive_interface":"sata",
     "headless": true,
     "http_directory": "kickstart",
     "boot_wait": "5s",
     "boot_command": [
       "<tab> ",
-      "inst.ks=http://{{.HTTPIP}}:{{.HTTPPort}}/centos-openshift.ks.cfg",
+      "inst.ks=http://{{.HTTPIP}}:{{.HTTPPort}}/centos-openshift-master.ks.cfg",
       "<enter>"
     ],
     "ssh_timeout": "15m",
@@ -40,7 +41,7 @@
     ]
   }],
   "variables": {
-    "name": "vb-centos7-openshift-np",
+    "name": "vb-centos7-openshift-master-np",
     "compression_level": "6",
     "mirror": "http://mirrors.ircam.fr/pub/CentOS"
   }
