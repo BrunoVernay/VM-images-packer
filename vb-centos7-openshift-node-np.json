@@ -36,13 +36,6 @@
       ["storageattach", "{{.Name}}", "--storagectl", "SATA Controller", "--port", "1", "--type", "hdd", "--medium", "{{.Name}}.vdi"]
     ]
   }],
-  "provisioners": [{
-    "type": "shell",
-    "scripts": [
-      "provisioners/shell/virtualbox.sh",
-      "provisioners/shell/openshift-node.sh"
-    ]
-  }],
   "variables": {
     "name": "vb-centos7-openshift-node-np",
     "compression_level": "6",
