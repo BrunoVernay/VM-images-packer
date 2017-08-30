@@ -137,6 +137,15 @@ I tried to reduce the size of the Docker-Storage-Setup. But it is hard to go bey
 
 Maybe I go too far with the kickstart file and an ansible or shell script would be more the right tool for the job. But currently, nothing too complex is done.
 
+#### To improve 
+
+To install OpenShift, you still have to distribute the key:
+```
+ssh-keygen -f /root/.ssh/id_rsa -t rsa -N ''
+for i in 192.168.56.10 192.168.56.12;do ssh-copy-id root@$i;done
+```
+and this will require a password for root (look at the kickstart file). It should be possible to installl from the linux host machine so (since you already have an account ssh key.  I have to test if it works !!!
+
 ### Fedora
 
 For usual stuff
