@@ -32,7 +32,7 @@
       ["modifyvm", "{{.Name}}", "--nic1", "nat"],
       ["modifyvm", "{{.Name}}", "--nic2", "hostonly"],
       ["modifyvm", "{{.Name}}", "--hostonlyadapter2", "vboxnet0"],
-      ["createmedium", "disk", "--filename", "{{.Name}}.vdi", "--size", "8192"],
+      ["createmedium", "disk", "--filename", "{{.Name}}.vdi", "--size", "12000"],
       ["storageattach", "{{.Name}}", "--storagectl", "SATA Controller", "--port", "1", "--type", "hdd", "--medium", "{{.Name}}.vdi"]
     ]
   }],

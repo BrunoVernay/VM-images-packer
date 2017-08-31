@@ -8,7 +8,7 @@
     "iso_checksum_type": "sha256",
     "vm_name": "{{user `name`}}",
     "name": "{{user `name`}}",
-    "disk_size": "10000",
+    "disk_size": "20000",
     "hard_drive_interface":"sata",
     "headless": true,
     "http_directory": "kickstart",
@@ -36,7 +36,6 @@
   "provisioners": [{
     "type": "shell",
     "scripts": [
-      "provisioners/shell/virtualbox.sh",
       "provisioners/shell/openshift.sh"
     ]
   }],
