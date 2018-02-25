@@ -2,13 +2,14 @@
   "builders": [{
     "type": "virtualbox-iso",
     "guest_os_type": "Fedora_64",
-    "iso_url": "{{user `mirror`}}/releases/24/Server/x86_64/iso/Fedora-Server-netinst-x86_64-24-1.2.iso",
-    "iso_checksum": "071c30520775b3e93bb4c34edab4eab3badc26fbb8473ad3a9458614ba85a4e5",
+    "iso_url": "{{user `mirror`}}/releases/27/Server/x86_64/iso/Fedora-Server-netinst-x86_64-27-1.6.iso",
+    "iso_checksum": "2b93836c38833b26891345388ff5ddea60529b27a616b4539d432a3520d1c90b",
     "iso_checksum_type": "sha256",
     "vm_name": "{{user `name`}}",
     "name": "{{user `name`}}",
-    "disk_size": "20000",
-    "headless": true,
+    "disk_size": "5000",
+    "hard_drive_interface":"sata",
+    "headless": false,
     "http_directory": "kickstart",
     "boot_wait": "5s",
     "boot_command": [
@@ -18,15 +19,13 @@
     ],
     "ssh_timeout": "15m",
     "ssh_username": "toto",
-    "ssh_private_key_file": "/home/bruno/.ssh/id_ecdsa",
+    "ssh_private_key_file": "/home/bruno2/.ssh/id_ecdsa",
     "shutdown_command": "sudo systemctl poweroff",
     "vboxmanage": [
-      ["modifyvm", "{{.Name}}", "--memory", "512"],
+      ["modifyvm", "{{.Name}}", "--memory", "1024"],
       ["modifyvm", "{{.Name}}", "--cpus", "1"],
       ["modifyvm", "{{.Name}}", "--audio", "none"],
-      ["modifyvm", "{{.Name}}", "--paravirtprovider", "kvm"]
-    ],
-    "vboxmanage_post": [
+      ["modifyvm", "{{.Name}}", "--paravirtprovider", "kvm"],
       ["modifyvm", "{{.Name}}", "--vrde", "off"],
       ["modifyvm", "{{.Name}}", "--nic1", "nat"],
       ["modifyvm", "{{.Name}}", "--nic2", "hostonly"],
@@ -45,8 +44,12 @@
   "type":"ansible",
   "playbook_file":"provisioners/ansible/playbook.yml"
   }],
+  "post-processors": [{
+      "type": "vagrant",
+      "compression_level": 9
+  }],
   "variables": {
-    "name": "vb-fedora-24-np",
+    "name": "vb-fedora-27-np",
     "compression_level": "6",
     "mirror": "http://download.fedoraproject.org/pub/fedora/linux"
   }

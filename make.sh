@@ -3,7 +3,7 @@
 # Re-create the VM.
 # Argument: file name   ( ${VM_NAME%.json} removes the extension if needed)
 
-export VM_NAME=${1:-"vb-fedora-24"}
+export VM_NAME=${1:-"vb-fedora-27-np"}
 export VM_NAME=${VM_NAME%.json}
 
 # Clean up old VM
@@ -31,7 +31,7 @@ if [ $PLOG -eq 1 ]; then
 fi
 
 # Create the VM
-time packr build $VM_NAME.json 
+time packerio build $VM_NAME.json 
 
 if [ -f output-$VM_NAME/$VM_NAME.ovf ]; then
     [ $PLOG -eq 1 ] && cp output-$VM_NAME/$VM_NAME.ovf log/${TIMER}_${VM_NAME}.ovf

@@ -27,11 +27,13 @@ I will try to add:
 ### Pre-requisite
  
 - VirtualBox v5.1.3 +
-- Packer v0.7.5 +
+- Packer v0.7.5 + (Renamed `packerio`! Installed in `/usr/local/bin` to be in the PATH)
 - Eventually setup your corporate proxy in all files: use the script `proxy-cleaner.sh`.
-- Setup your SSH key (or enable passwords) in the Packer file (.json) and the kickstart file
+- Setup your SSH key (`ssh-keygen -t ecdsa` or enable passwords) in the Packer file (.json) and the kickstart file
 - Setup your local RPM cache (or change the kickstart file)
- 
+
+Could help: `sudo dnf install pykickstart ansible squid`
+
 ### All kind of proxy ...
 
 I deal with 2 proxy:
