@@ -1,5 +1,6 @@
 # Cache objects
 packer_cache/
+*.swp
 
 # Used to store the proxy (see proxy_cleaner.sh)
 .proxy_valued
