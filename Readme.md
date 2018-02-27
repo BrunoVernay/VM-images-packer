@@ -7,9 +7,9 @@ Focus on supporting proxy. (But (un)commenting a few lines and you get non-proxi
 All images have: 
 - proxy support except when the name ends with "-np" (**n**o **p**roxy).
 - VirtualBox Guest Additions
+- Vagrant export as a bonus
 
-- vb-fedora-24 (VirtualBox from Oracle repo)  Fedora 24 
-- vbrpmfusion-fedora-24 (VirtualBox from RPMFusion repo)  Fedora 24 
+- vb-fedora-27 (VirtualBox from Oracle repo)  Fedora 27 
 
 
 ## Reproductible builds
@@ -29,7 +29,7 @@ I will try to add:
 - VirtualBox v5.1.3 +
 - Packer v0.7.5 + (Renamed `packerio`! Installed in `/usr/local/bin` to be in the PATH)
 - Eventually setup your corporate proxy in all files: use the script `proxy-cleaner.sh`.
-- Setup your SSH key (`ssh-keygen -t ecdsa` or enable passwords) in the Packer file (.json) and the kickstart file
+- Setup your SSH key (`ssh-keygen -t ecdsa` or enable passwords) in the Packer file (.json) and the kickstart file, I also add the Vagrant user and key.
 - Setup your local RPM cache (or change the kickstart file)
 
 Could help: `sudo dnf install pykickstart ansible squid`
@@ -150,7 +150,9 @@ and this will require a password for root (look at the kickstart file). It shoul
 
 ### Fedora
 
-For usual stuff
+For usual stuff. There is a Vagrant export for Fedora.
+On Linux I had to specify the provider on the command line:
+`vagrant box up --provider virtualbox`
 
 ### OpenStack CentOS 7
 

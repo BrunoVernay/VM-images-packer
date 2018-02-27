@@ -18,7 +18,7 @@
       "<enter>"
     ],
     "ssh_timeout": "15m",
-    "ssh_username": "toto",
+    "ssh_username": "vagrant",
     "ssh_private_key_file": "/home/bruno2/.ssh/id_ecdsa",
     "shutdown_command": "sudo systemctl poweroff",
     "vboxmanage": [
